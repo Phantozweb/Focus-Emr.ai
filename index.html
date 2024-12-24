@@ -1,7 +1,8 @@
-<html><head><base href="." /><!DOCTYPE html>
+<html><head><base href=".">
+<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Focus File - Modern Eye Care Records</title>
+<title>Focus EMR.AI - Optometric Electronic Medical Records</title>
 
 <style>
 /* Update color scheme and variables */
@@ -38,7 +39,7 @@ body {
   line-height: 1.6;
   font-size: 16px;
   margin: 0;
-  padding-top: 60px;
+  padding-top: 120px;
   overflow-x: hidden;
 }
 
@@ -64,7 +65,31 @@ body {
   color: var(--primary);
   margin: 0;
   font-weight: 600;
-  text-align: center; /* Center align navbar title */
+}
+
+/* Export button styles */
+.export-btn {
+  background: var(--surface);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.export-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.export-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* Enhanced tab container */
@@ -73,10 +98,11 @@ body {
   top: 60px;
   left: 0;
   right: 0;
-  background: rgba(255,255,255,0.95); /* More opaque background */
+  background: var(--surface);
   z-index: 999;
   padding: 16px;
   box-shadow: var(--shadow-sm);
+  transition: background-color 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,7 +112,7 @@ body {
 }
 
 .tab-container .tab-group {
-  background: rgba(0,0,0,0.03); /* Lighter background */
+  background: rgba(0,0,0,0.05);
   padding: 4px;
   border-radius: 16px;
   display: flex;
@@ -95,75 +121,91 @@ body {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.tab-container .tab-group::-webkit-scrollbar {
+  display: none;
 }
 
 .tab {
-  padding: 10px 20px;
-  border-radius: var(--radius-lg);
-  font-weight: 600; /* Make text bolder */
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
   transition: all 0.3s ease;
-  background: rgba(255,255,255,0.95); /* Lighter background */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--text-primary); /* Darker text color */
-  border: 1px solid rgba(0,0,0,0.1); /* Add subtle border */
-  font-size: 14px; /* Slightly larger text */
-  letter-spacing: 0.3px; /* Better letter spacing */
-}
-
-.tab:hover {
-  background: var(--primary);
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
 }
 
 .tab.active {
-  background: var(--primary);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tab:hover:not(.active) {
+  background: rgba(0,0,0,0.03);
 }
 
 /* Update tab content styles */
 .tab-content {
-  display: none;
+  display: block !important; /* Always show content */
   padding: 24px;
-  margin-top: 120px;
+  margin-bottom: 24px;
   animation: fadeIn 0.3s ease-in-out;
   background: var(--surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1000px; /* Center tab content */
 }
 
-/* Update form group and input styles to center content */
+.tab-content h2 {
+  color: var(--primary);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Enhanced form styles */
 .form-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center align form group contents */
-  text-align: center;
-  width: 100%;
-  max-width: 500px; /* Add max-width for better readability */
-  margin: 0 auto var(--spacing-lg); /* Center the form group horizontally */
+  margin-bottom: var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.7);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
 }
 
-/* Update input styles for centering */
+.form-group:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.form-group:focus-within label {
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
 input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="number"],
-input[type="date"],
-textarea,
 select,
-.select2-container {
+textarea {
   width: 100%;
-  max-width: 400px; /* Limit width for better aesthetics */
-  margin: 0 auto;
-  text-align: center;
   padding: var(--spacing-md);
   border-radius: var(--radius-lg);
   border: 1px solid rgba(0,0,0,0.1);
@@ -171,109 +213,75 @@ select,
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   font-size: 16px;
-  font-weight: 500;
-  transition: var(--transition);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* Center prescription grid items */
-.prescription-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-lg);
-  margin: var(--spacing-lg) auto;
-  width: 100%;
-  max-width: 800px;
-  text-align: center;
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2), 
+              inset 0 2px 4px rgba(0,0,0,0.05);
+  transform: translateY(-1px);
 }
 
-/* Center align labels */
-.form-group label {
-  display: block;
-  width: 100%;
-  text-align: center;
-  margin-bottom: var(--spacing-sm);
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-/* Center align small text */
-.form-group small {
-  display: block;
-  width: 100%;
-  text-align: center;
-  color: var(--text-secondary);
-  margin-top: var(--spacing-xs);
-}
-
-/* Center Select2 containers */
-.select2-container {
-  margin: 0 auto !important;
-  text-align: center !important;
-}
-
+/* Enhanced Select2 styling for iOS-like appearance */
 .select2-container .select2-selection--single,
 .select2-container .select2-selection--multiple {
-  text-align: center;
+  height: auto;
+  min-height: 48px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Center ios-select dropdowns */
-select.ios-select {
-  margin: 0 auto;
-  display: block;
-  text-align-last: center;
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding: var(--spacing-md);
+  line-height: 1.5;
 }
 
-/* Center checkbox groups */
-.checkbox-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-sm);
-  margin: 0 auto;
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 4px 12px;
+  margin: 4px;
+  animation: scaleIn 0.2s ease-out;
 }
 
-/* Update styles for VA interpretation */
-.va-interpretation {
-  margin-top: var(--spacing-sm); /* Reduced from md */
-  padding: var(--spacing-sm); /* Reduced from md */
-  background: rgba(33, 150, 243, 0.1);
-  border-radius: var(--radius-md); /* Reduced from lg */
-  border: 1px solid var(--primary);
-  transition: var(--transition);
-  text-align: center;
-  font-size: 0.9rem; /* Added smaller font size */
-  max-width: 400px; /* Added max-width to make it more compact */
-  margin-left: auto;
-  margin-right: auto;
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
 }
 
-.va-interpretation h3 {
-  font-size: 1rem; /* Reduced heading size */
-  margin: 0 0 8px 0; /* Reduced margin */
+.select2-dropdown {
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: dropdownIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.va-section {
-  margin-bottom: 6px; /* Reduced spacing between sections */
+.select2-search__field {
+  border-radius: var(--radius-lg) !important;
+  padding: 8px 12px !important;
+  margin: 4px !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.va-status {
-  display: inline-block;
-  padding: 3px 8px; /* Reduced padding */
-  border-radius: var(--radius-sm); /* Reduced border radius */
-  font-weight: 600;
-  font-size: 0.8rem; /* Reduced font size */
-  margin-right: 4px; /* Reduced margin */
-}
-
-.va-comparison {
-  margin-top: 6px; /* Reduced top margin */
-  font-size: 0.85rem; /* Slightly smaller font */
-  color: var(--text-secondary);
-}
-
-/* Enhanced animations */
+/* Add new animations */
 @keyframes scaleIn {
   from {
     transform: scale(0.95);
@@ -282,6 +290,17 @@ select.ios-select {
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -308,25 +327,6 @@ button:hover {
 
 button:active {
   transform: translateY(0);
-}
-
-/* Eye movement animations */
-@keyframes eyeMove {
-  0%, 100% { transform: translate(0, 0); }
-  20% { transform: translate(0, -3px); }  /* Up */
-  30% { transform: translate(0, 3px); }   /* Down */
-  50% { transform: translate(-3px, 0); }  /* Left */
-  60% { transform: translate(3px, 0); }   /* Right */
-  70% { transform: translate(-3px, -3px); } /* Top left */
-  80% { transform: translate(3px, -3px); }  /* Top right */
-  90% { transform: translate(0, 0); }     /* Center */
-}
-
-/* Update eye styles */
-.eye .iris,
-.eye .pupil {
-  transform-origin: center;
-  animation: eyeMove 8s ease-in-out infinite;
 }
 
 /* Mobile responsiveness */
@@ -401,34 +401,30 @@ button:active {
   }
 }
 
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
 /* Analysis grid styles */
 .analysis-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-lg);
-}
-
-/* Styles for the download button in nav */
-.nav-download {
-  display: flex;
-  align-items: center;
-  gap: 4px; /* Reduced gap */
-  padding: 6px 12px; /* Reduced padding */
-  background: var(--primary);
-  color: white;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: var(--transition);
-  font-size: 14px; /* Smaller text */
-}
-
-.nav-download:hover {
-  background: var(--primary-dark);
-}
-
-.nav-download svg {
-  width: 14px; /* Smaller icon */
-  height: 14px; /* Smaller icon */
 }
 
 /* Remove cases panel styles */
@@ -481,62 +477,37 @@ button:active {
 
 /* Additional styles for visual acuity interpretation */
 .va-interpretation {
-  margin-top: var(--spacing-sm); /* Reduced from md */
-  padding: var(--spacing-sm); /* Reduced from md */
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
   background: rgba(33, 150, 243, 0.1);
-  border-radius: var(--radius-md); /* Reduced from lg */
+  border-radius: var(--radius-lg);
   border: 1px solid var(--primary);
   transition: var(--transition);
-  text-align: center;
-  font-size: 0.9rem; /* Added smaller font size */
-  max-width: 400px; /* Added max-width to make it more compact */
-  margin-left: auto;
-  margin-right: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.va-interpretation h3 {
-  font-size: 1rem; /* Reduced heading size */
-  margin: 0 0 8px 0; /* Reduced margin */
+.va-interpretation table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing-sm);
 }
 
-.va-section {
-  margin-bottom: 6px; /* Reduced spacing between sections */
+.va-interpretation th,
+.va-interpretation td {
+  padding: var(--spacing-sm);
+  text-align: left;
+  border: 1px solid rgba(33, 150, 243, 0.2);
 }
 
-.va-status {
-  display: inline-block;
-  padding: 3px 8px; /* Reduced padding */
-  border-radius: var(--radius-sm); /* Reduced border radius */
-  font-weight: 600;
-  font-size: 0.8rem; /* Reduced font size */
-  margin-right: 4px; /* Reduced margin */
+.va-interpretation th {
+  background: rgba(33, 150, 243, 0.1);
+  font-weight: 500;
 }
 
-.va-comparison {
-  margin-top: 6px; /* Reduced top margin */
-  font-size: 0.85rem; /* Slightly smaller font */
-  color: var(--text-secondary);
+.va-interpretation tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.5);
 }
-
-/* Eye colors and blink animation */
-@keyframes blink {
-  0%, 95% { transform: scaleY(1); }
-  97% { transform: scaleY(0.1); }
-}
-
-.eye-diagram {
-  max-width: 300px; /* Make eyes smaller */
-  margin: 0 auto;
-}
-
-.eye .iris {
-  transition: fill 0.3s ease;
-}
-
-/* VA status colors */
-.eye.normal .iris { fill: #4CAF50; }
-.eye.moderate .iris { fill: #FFC107; }
-.eye.severe .iris { fill: #F44336; }
 
 /* Add these styles to enhance the dropdown appearance */
 select.ios-select {
@@ -564,7 +535,7 @@ select.ios-select {
 select.ios-select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2),
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2), 
               inset 0 2px 4px rgba(0,0,0,0.05);
   transform: translateY(-1px);
 }
@@ -580,18 +551,222 @@ select.ios-select option {
   background: var(--surface);
   color: var(--text-primary);
 }
+
+/* Additional styles for duration input */
+.duration-detail-container {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.duration-detail-container.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.duration-detail-container label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.duration-detail-container input {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.duration-detail-container input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+  transform: translateY(-1px);
+}
+
+#procedures + .select2-container .select2-selection--multiple {
+  min-height: 48px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+#procedures + .select2-container .select2-selection--multiple .select2-selection__choice {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 4px 12px;
+  margin: 4px;
+  animation: scaleIn 0.2s ease-out;
+}
+
+#procedures + .select2-container .select2-selection--multiple .select2-selection__choice__remove {
+  color: white;
+  margin-right: 8px;
+}
+
+#otherProcedureContainer {
+  margin-top: var(--spacing-md);
+}
+
+#otherProcedureContainer.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.va-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.va-selector select {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.va-selector small {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.assessment-section,
+.plan-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.assessment-section h3,
+.plan-section h3 {
+  color: var(--primary);
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.2rem;
+}
+
+/* Enhanced Select2 styling for assessment dropdowns */
+.assessment-select + .select2-container .select2-selection--single,
+.assessment-select + .select2-container .select2-selection--multiple {
+  height: auto;
+  min-height: 48px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.assessment-select + .select2-container .select2-selection--multiple .select2-selection__choice {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 4px 12px;
+  margin: 4px;
+  animation: scaleIn 0.2s ease-out;
+}
+
+.prescription-grid h3 {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+#refractionResults {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+}
+
+#refractionResults.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+html {
+  scroll-padding-top: 120px;
+  scroll-behavior: smooth;
+}
+
+.container {
+  padding-top: 120px;
+}
 </style>
 
 <!-- Add Select2 library references in the <head> section -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script>
 // Initialize symptom dropdowns
 function initializeSymptomDropdowns() {
+  // Add Purpose of Visit options
+  const purposeOfVisit = [
+    'Routine Eye Examination',
+    'Vision Problem',
+    'Eye Pain/Discomfort', 
+    'Follow-up Visit',
+    'Contact Lens Fitting',
+    'Emergency Visit',
+    'Second Opinion',
+    'Vision Screening',
+    'Eye Surgery Consultation',
+    'Other'
+  ];
+
+  // Initialize Select2 for Purpose of Visit
+  $('#purposeOfVisit').select2({
+    tags: true,
+    tokenSeparators: [',', ' '],
+    placeholder: '',
+    data: purposeOfVisit.map(purpose => ({
+      id: purpose,
+      text: purpose
+    })),
+    matcher: function(params, data) {
+      if (!params.term) {
+        return data;
+      }
+      
+      if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+        return data;
+      }
+      
+      return null;
+    }
+  });
+
   // Visual Symptoms Options
   const visualSymptoms = [
     'Blurred Vision',
@@ -624,11 +799,11 @@ function initializeSymptomDropdowns() {
     'Eyelid Problems'
   ];
 
-  // Initialize Select2 for Visual Symptoms
+  // Initialize Select2 for Visual Symptoms with shorter placeholder
   $('#visualSymptoms').select2({
     tags: true,
     tokenSeparators: [',', ' '],
-    placeholder: 'Type to search or add symptoms...',
+    placeholder: '',
     data: visualSymptoms.map(symptom => ({
       id: symptom,
       text: symptom
@@ -646,11 +821,11 @@ function initializeSymptomDropdowns() {
     }
   });
 
-  // Initialize Select2 for Ocular Symptoms
+  // Initialize Select2 for Ocular Symptoms with shorter placeholder
   $('#ocularSymptoms').select2({
     tags: true,
     tokenSeparators: [',', ' '],
-    placeholder: 'Type to search or add symptoms...',
+    placeholder: '',
     data: ocularSymptoms.map(symptom => ({
       id: symptom,
       text: symptom
@@ -668,10 +843,10 @@ function initializeSymptomDropdowns() {
     }
   });
 
-  // Initialize Chief Complaints
+  // Initialize Chief Complaints with shorter placeholder
   const chiefComplaints = [
     'Routine Eye Examination',
-    'Vision Problem',
+    'Vision Problem', 
     'Eye Pain',
     'Eye Redness',
     'Eye Injury',
@@ -685,7 +860,7 @@ function initializeSymptomDropdowns() {
       id: complaint,
       text: complaint
     })),
-    placeholder: 'Select or type chief complaint...',
+    placeholder: '',
     tags: true,
     matcher: function(params, data) {
       if (!params.term) {
@@ -701,59 +876,142 @@ function initializeSymptomDropdowns() {
   });
 }
 
-// Add this function for VA options
-function populateVAOptions() {
-  const vaOptions = [
-    '6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60',
-    'CF @ 3m', 'CF @ 2m', 'CF @ 1m', 'HM', 'PL+', 'PL-', 'NPL'
-  ];
+function handleOtherOption(selectElement, containerId) {
+  const selectedValues = $(selectElement).val() || [];
+  const otherContainer = document.getElementById(containerId);
   
-  const vaSelectors = ['vaLeft', 'vaRight', 'revisitVaLeft', 'revisitVaRight'];
+  if (selectedValues.includes('other')) {
+    otherContainer.style.display = 'block';
+    requestAnimationFrame(() => {
+      otherContainer.classList.add('fade-enter-active');
+    });
+  } else {
+    otherContainer.classList.remove('fade-enter-active');
+    otherContainer.style.display = 'none';
+  }
+}
+
+// Initialize all assessment dropdowns
+function initializeAssessmentDropdowns() {
+  // Initialize all Select2 dropdowns
+  $('.assessment-select').select2({
+    placeholder: '',
+    tags: true,
+    width: '100%'
+  });
+
+  // Add change handlers for "Other" options
+  $('#primaryDiagnosis').on('change', function() {
+    handleOtherOption(this, 'otherDiagnosisContainer');
+  });
   
-  vaSelectors.forEach(selectorId => {
-    const select = document.getElementById(selectorId);
-    if (select) {
-      vaOptions.forEach(va => {
-        const option = document.createElement('option');
-        option.value = va;
-        option.textContent = va;
-        select.appendChild(option);
-      });
+  $('#secondaryFindings').on('change', function() {
+    handleOtherOption(this, 'otherFindingsContainer');
+  });
+  
+  $('#medications').on('change', function() {
+    handleOtherOption(this, 'otherMedicationContainer');
+  });
+  
+  $('#additionalInvestigations').on('change', function() {
+    handleOtherOption(this, 'otherInvestigationContainer');
+  });
+  
+  $('#patientEducation').on('change', function() {
+    handleOtherOption(this, 'otherEducationContainer');
+  });
+  
+  $('#specialistReferral').on('change', function() {
+    handleOtherOption(this, 'otherReferralContainer');
+  });
+}
+
+// Update switchTab function to properly handle display
+function switchTab(tabId) {
+  // Remove active class from all tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+
+  // Add active class to selected tab button
+  const selectedTab = document.querySelector(`.tab[data-tab="${tabId}"]`);
+  if (selectedTab) {
+    selectedTab.classList.add('active');
+  }
+
+  // Scroll to section with smooth behavior and offset for fixed header
+  const section = document.getElementById(tabId);
+  if (section) {
+    const offset = 120; // Height of fixed header
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = section.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+}
+
+// Modified DOMContentLoaded to remove database initialization
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize tab click handlers
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      const tabId = this.getAttribute('data-tab');
+      switchTab(tabId);
+    });
+  });
+
+  // Add scroll event listener
+  window.addEventListener('scroll', updateActiveTabOnScroll, { passive: true });
+
+  // Set initial active tab
+  switchTab('info');
+  
+  // Initialize dropdowns after a small delay to ensure Select2 is loaded
+  setTimeout(() => {
+    initializeSymptomDropdowns();
+    initializeAssessmentDropdowns();
+  }, 100);
+});
+
+function updateActiveTabOnScroll() {
+  const sections = document.querySelectorAll('.tab-content');
+  const tabs = document.querySelectorAll('.tab');
+  
+  // Get the scroll position
+  const scrollPosition = window.scrollY + 120; // Add offset for fixed header
+  
+  // Find which section is currently in view
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+    
+    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+      // Remove active class from all tabs
+      tabs.forEach(tab => tab.classList.remove('active'));
+      
+      // Add active class to current section's tab
+      const currentTab = document.querySelector(`.tab[data-tab="${section.id}"]`);
+      if (currentTab) {
+        currentTab.classList.add('active');
+      }
     }
   });
 }
 
-// New function to update eye colors based on VA interpretation
-function updateEyeColors(va, eyeClass) {
-  const eye = document.querySelector(`.eye.${eyeClass}`);
-  if (!eye) return;
-  
-  // Remove existing status classes
-  eye.classList.remove('normal', 'moderate', 'severe');
-  
-  if (!va) return;
-  
-  // Determine status based on VA value
-  if (va === '6/6' || va === '6/9') {
-    eye.classList.add('normal');
-  } else if (va === '6/12' || va === '6/18') {
-    eye.classList.add('moderate');
-  } else {
-    eye.classList.add('severe');
-  }
-}
-
-// Modify the updateVAInterpretation function to include eye color updates
+// Update visual acuity interpretation function
 function updateVAInterpretation() {
-  const vaLeft = document.getElementById('vaLeft').value;
-  const vaRight = document.getElementById('vaRight').value;
+  const vaLeftUnaided = document.getElementById('vaLeftUnaided').value;
+  const vaRightUnaided = document.getElementById('vaRightUnaided').value;
+  const vaLeftAided = document.getElementById('vaLeftAided').value;
+  const vaRightAided = document.getElementById('vaRightAided').value;
   const interpretationDiv = document.getElementById('vaInterpretation');
   
-  // Update eye colors
-  updateEyeColors(vaLeft, 'left');
-  updateEyeColors(vaRight, 'right');
-  
-  if (!vaLeft && !vaRight) {
+  if (!vaLeftUnaided && !vaRightUnaided && !vaLeftAided && !vaRightAided) {
     interpretationDiv.innerHTML = 'Select visual acuity measurements above to see interpretation.';
     interpretationDiv.classList.remove('has-value');
     return;
@@ -761,34 +1019,34 @@ function updateVAInterpretation() {
 
   interpretationDiv.classList.add('has-value');
   
-  let interpretation = '<h3>Visual Acuity Interpretation</h3><div class="va-details">';
-  
-  // Interpret Left Eye
-  if (vaLeft) {
-    interpretation += '<div class="va-section"><strong>Left Eye (OS):</strong> ';
-    interpretation += getVAStatusHTML(vaLeft);
-    interpretation += '</div>';
-  }
-  
-  // Interpret Right Eye
-  if (vaRight) {
-    interpretation += '<div class="va-section"><strong>Right Eye (OD):</strong> ';
-    interpretation += getVAStatusHTML(vaRight);
-    interpretation += '</div>';
-  }
-  
+  let interpretation = '<h3>Visual Acuity Interpretation</h3>';
+  interpretation += '<table><thead><tr><th>Eye</th><th>Unaided</th><th>Aided</th><th>Status</th></tr></thead><tbody>';
+
+  // Right Eye row
+  interpretation += '<tr><td>Right Eye (OD)</td>';
+  interpretation += `<td>${vaRightUnaided || '-'}</td>`;
+  interpretation += `<td>${vaRightAided || '-'}</td>`;
+  interpretation += `<td>${vaRightUnaided ? getVAStatusHTML(vaRightUnaided) : ''}${vaRightAided ? '<br>' + getVAStatusHTML(vaRightAided) : ''}</td></tr>`;
+
+  // Left Eye row
+  interpretation += '<tr><td>Left Eye (OS)</td>';
+  interpretation += `<td>${vaLeftUnaided || '-'}</td>`;
+  interpretation += `<td>${vaLeftAided || '-'}</td>`;
+  interpretation += `<td>${vaLeftUnaided ? getVAStatusHTML(vaLeftUnaided) : ''}${vaLeftAided ? '<br>' + getVAStatusHTML(vaLeftAided) : ''}</td></tr>`;
+
+  interpretation += '</tbody></table>';
+
   // Add comparison if both eyes have measurements
-  if (vaLeft && vaRight) {
+  if ((vaLeftUnaided && vaRightUnaided) || (vaLeftAided && vaRightAided)) {
     interpretation += '<div class="va-comparison"><strong>Comparison:</strong> ';
-    if (vaLeft === vaRight) {
+    if (vaLeftAided === vaRightAided && vaLeftUnaided === vaRightUnaided) {
       interpretation += 'Visual acuity is equal in both eyes.';
     } else {
       interpretation += 'Visual acuity differs between eyes - further investigation recommended.';
     }
     interpretation += '</div>';
   }
-  
-  interpretation += '</div>';
+
   interpretationDiv.innerHTML = interpretation;
 }
 
@@ -814,373 +1072,434 @@ function getVAStatusHTML(va) {
   return `${status} ${description}`;
 }
 
-// Updated switchTab function to properly handle display
-function switchTab(tabId) {
-  // Hide all tab contents
-  document.querySelectorAll('.tab-content').forEach(content => {
-    content.classList.remove('active');
-    content.style.display = 'none';
+function initializeProceduresDropdown() {
+  $('#procedures').select2({
+    placeholder: '',
+    tags: true,
+    tokenSeparators: [',', ' '],
+    width: '100%'
+  }).on('change', function(e) {
+    const selectedValues = $(this).val() || [];
+    const otherContainer = document.getElementById('otherProcedureContainer');
+    
+    if (selectedValues.includes('other')) {
+      otherContainer.style.display = 'block';
+      requestAnimationFrame(() => {
+        otherContainer.classList.add('fade-enter-active');
+      });
+    } else {
+      otherContainer.classList.remove('fade-enter-active');
+      otherContainer.style.display = 'none';
+    }
+  });
+}
+
+function populateVAOptions() {
+  // Common VA measurement options
+  const vaOptions = [
+    '',
+    '6/6',
+    '6/9',
+    '6/12',
+    '6/18',
+    '6/24',
+    '6/36',
+    '6/60',
+    'CF 1m',
+    'CF 2m', 
+    'CF 3m',
+    'HM',
+    'PL',
+    'NPL'
+  ];
+
+  // Get all VA select elements
+  const vaSelects = [
+    document.getElementById('vaLeftUnaided'),
+    document.getElementById('vaLeftAided'),
+    document.getElementById('vaRightUnaided'),
+    document.getElementById('vaRightAided'),
+    document.getElementById('revisitVaLeft'),
+    document.getElementById('revisitVaRight')
+  ];
+
+  // Populate each select with VA options
+  vaSelects.forEach(select => {
+    if (select) { // Check if element exists
+      vaOptions.forEach(option => {
+        const optElement = document.createElement('option');
+        optElement.value = option;
+        optElement.textContent = option || ''; // Empty string for blank option
+        select.appendChild(optElement);
+      });
+    }
+  });
+}
+
+// Handle history tab changes
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize all select2 dropdowns in history tab
+  $('#ocularHistory, #medicalHistory, #allergies, #familyHistory, #hobbies, #systemicSymptoms').select2({
+    width: '100%',
+    placeholder: ''
   });
 
-  // Remove active class from all tabs
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.classList.remove('active');
-  });
-
-  // Show selected tab content
-  const selectedContent = document.getElementById(tabId);
-  if (selectedContent) {
-    selectedContent.classList.add('active');
-    selectedContent.style.display = 'block';
-  }
-
-  // Add active class to selected tab button
-  const selectedTab = document.querySelector(`.tab[data-tab="${tabId}"]`);
-  if (selectedTab) {
-    selectedTab.classList.add('active');
-  }
-}
-
-// Modified generatePatientPDF function to properly display patient details
-async function generatePatientPDF() {
-  try {
-    const formData = await saveAllData();
-    
-    // Ensure jsPDF is properly loaded
-    if (!window.jspdf || !window.jspdf.jsPDF) {
-      throw new Error('jsPDF library not loaded properly');
-    }
-    
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    // Add header
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(24);
-    doc.setTextColor(33, 150, 243); // Primary color
-    doc.text('Focus EMR Clinical Report', 105, 20, { align: 'center' });
-    
-    // Add patient name prominently
-    doc.setFontSize(16);
-    doc.setTextColor(33, 33, 33);
-    doc.text(`Patient: ${formData.patientInfo.name || 'N/A'}`, 105, 35, { align: 'center' });
-    
-    // Add timestamp and MRD
-    doc.setFontSize(12);
-    doc.setTextColor(117, 117, 117); // Secondary text color
-    doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 45, { align: 'center' });
-    doc.text(`MRD Number: ${formData.patientInfo.mrdNumber || 'N/A'}`, 105, 50, { align: 'center' });
-
-    // Helper function for section headers
-    function addSectionHeader(text, y) {
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(14);
-      doc.setTextColor(33, 150, 243);
-      doc.text(text, 20, y);
-      doc.line(20, y + 1, 190, y + 1);
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.setTextColor(33, 33, 33);
-      return y + 10;
-    }
-
-    // Helper function for content with error handling
-    function addContent(text, y, maxWidth = 170) {
-      try {
-        const content = text || 'N/A';
-        const lines = doc.splitTextToSize(content, maxWidth);
-        doc.text(lines, 20, y);
-        return y + (lines.length * 5) + 5;
-      } catch (error) {
-        console.error('Error adding content:', error);
-        doc.text('Error displaying content', 20, y);
-        return y + 5;
-      }
-    }
-
-    let y = 60; // Start further down to accommodate the header
-
-    // Patient Information Section
-    y = addSectionHeader('Patient Information', y);
-    y = addContent(`Name: ${formData.patientInfo.name || 'N/A'}`, y);
-    y = addContent(`Age: ${formData.patientInfo.age || 'N/A'} years`, y);
-    y = addContent(`Gender: ${formData.patientInfo.gender || 'N/A'}`, y);
-    y = addContent(`Contact: ${formData.patientInfo.phone || 'N/A'}`, y);
-    y = addContent(`Email: ${formData.patientInfo.email || 'N/A'}`, y);
-
-    // Continue with the rest of your sections...
-    // Add new page if needed
-    if (y > 250) {
-      doc.addPage();
-      y = 20;
-    }
-
-    // Medical History Section
-    y = addSectionHeader('Medical History', y + 5);
-    y = addContent(`Past Medical History: ${formData.medicalHistory.pastHistory || 'N/A'}`, y);
-    y = addContent(`Family History: ${formData.medicalHistory.familyHistory || 'N/A'}`, y);
-    y = addContent(`Current Medications: ${formData.medicalHistory.medications || 'N/A'}`, y);
-    y = addContent(`Allergies: ${formData.medicalHistory.allergies || 'N/A'}`, y);
-
-    // Add new page if needed
-    if (y > 250) {
-      doc.addPage();
-      y = 20;
-    }
-
-    // Signs & Symptoms Section
-    y = addSectionHeader('Signs & Symptoms', y + 5);
-    y = addContent(`Chief Complaint: ${formData.symptoms.chiefComplaint || 'N/A'}`, y);
-    y = addContent(`Duration: ${formData.symptoms.duration || 'N/A'}`, y);
-    y = addContent(`Visual Symptoms: ${(formData.symptoms.visualSymptoms || []).join(', ') || 'N/A'}`, y);
-    y = addContent(`Ocular Symptoms: ${(formData.symptoms.ocularSymptoms || []).join(', ') || 'N/A'}`, y);
-    y = addContent(`Additional Notes: ${formData.symptoms.notes || 'N/A'}`, y);
-
-    // Add new page if needed
-    if (y > 250) {
-      doc.addPage();
-      y = 20;
-    }
-
-    // Examination Section
-    y = addSectionHeader('Examination Findings', y + 5);
-    y = addContent(`Visual Acuity (OS): ${formData.examination.vaLeft || 'N/A'}`, y);
-    y = addContent(`Visual Acuity (OD): ${formData.examination.vaRight || 'N/A'}`, y);
-    y = addContent(`IOP Left: ${formData.examination.iopLeft || 'N/A'} mmHg`, y);
-    y = addContent(`IOP Right: ${formData.examination.iopRight || 'N/A'} mmHg`, y);
-    y = addContent(`Examination Notes: ${formData.examination.notes || 'N/A'}`, y);
-
-    // Add new page if needed
-    if (y > 250) {
-      doc.addPage();
-      y = 20;
-    }
-
-    // Assessment Section
-    y = addSectionHeader('Assessment & Plan', y + 5);
-    y = addContent(`Clinical Findings: ${formData.diagnosis.findings || 'N/A'}`, y);
-    y = addContent(`Primary Diagnosis: ${formData.diagnosis.diagnosis || 'N/A'}`, y);
-    y = addContent(`Differential Diagnosis: ${formData.diagnosis.differential || 'N/A'}`, y);
-    y = addContent(`Treatment Plan: ${formData.diagnosis.treatment || 'N/A'}`, y);
-    y = addContent(`Patient Education: ${formData.diagnosis.education || 'N/A'}`, y);
-    y = addContent(`Follow-up Plan: ${formData.diagnosis.followup || 'N/A'}`, y);
-
-    // Add new page if needed
-    if (y > 250) {
-      doc.addPage();
-      y = 20;
-    }
-
-    // Prescription Section
-    y = addSectionHeader('Prescription Details', y + 5);
-
-    // Get prescription values with proper sign handling
-    const prescriptionData = {
-      sph: validatePrescriptionValue(document.getElementById('sph').value),
-      cyl: validatePrescriptionValue(document.getElementById('cyl').value),
-      axis: document.getElementById('axis').value || 'N/A',
-      add: validatePrescriptionValue(document.getElementById('add').value)
-    };
-
-    // Add prescription in text format
-    try {
-      let prescriptionText = '';
-
-      // Format prescription based on available values
-      if (prescriptionData.sph !== 'N/A' || prescriptionData.cyl !== 'N/A') {
-        // If cylinder exists, show in format "sph/cyl × axis"
-        if (prescriptionData.cyl !== 'N/A' && prescriptionData.axis !== 'N/A') {
-          prescriptionText = `Prescription: ${prescriptionData.sph}/${prescriptionData.cyl} × ${prescriptionData.axis}°`;
-        } 
-        // If only spherical power exists
-        else if (prescriptionData.sph !== 'N/A') {
-          prescriptionText = `Prescription: ${prescriptionData.sph} D`;
-        }
-        
-        // Add add power on new line if it exists
-        if (prescriptionData.add !== 'N/A') {
-          prescriptionText += `\nAdd Power: ${prescriptionData.add} D`;
-        }
-      } else {
-        prescriptionText = 'No prescription values entered';
-      }
-      
-      y = addContent(prescriptionText, y);
-      
-      // Add prescription notes if available
-      const rxNotes = document.getElementById('rxNotes').value;
-      if (rxNotes) {
-        y = addContent(`\nNotes: ${rxNotes}`, y + 5);
-      }
-
-    } catch (error) {
-      console.error('Error adding prescription details:', error);
-      y = addContent('Error displaying prescription details. Please check the entered values.', y);
-      y += 10;
-    }
-
-    // Add new page if needed
-    if (y > 250) {
-      doc.addPage();
-      y = 20;
-    }
-
-    // Footer
-    doc.setFontSize(8);
-    doc.setTextColor(117, 117, 117);
-    doc.text('This is a computer-generated document.', 105, 285, { align: 'center' });
-    doc.text('Focus EMR Clinical Management System', 105, 290, { align: 'center' });
-
-    // Save PDF with error handling
-    try {
-      const timestamp = new Date().toISOString().split('T')[0];
-      const filename = `EMR_Report_${(formData.patientInfo.name || 'Patient').replace(/\s+/g, '_')}_${timestamp}.pdf`;
-      doc.save(filename);
-      alert('EMR Report has been generated successfully!');
-    } catch (error) {
-      console.error('Error saving PDF:', error);
-      alert('Error saving PDF. Please try again.');
-    }
-
-  } catch (error) {
-    console.error('Error generating EMR report:', error);
-    alert('Error generating EMR report. Please try again.');
-  }
-}
-
-// Update the validatePrescriptionValue function to handle signs properly
-function validatePrescriptionValue(value) {
-  if (!value || value === '') return 'N/A';
-  let num = parseFloat(value);
-  if (isNaN(num)) return 'N/A';
-  
-  // If the value is positive and doesn't already have a + sign, add it
-  // Except for axis which doesn't need a sign
-  if (num > 0) {
-    return '+' + num.toFixed(2);
-  }
-  // For negative values or zero, just show the number
-  return num.toFixed(2);
-}
-
-// Simplify saveAllData to just collect form data for PDF
-async function saveAllData() {
-  const formData = {
-    patientInfo: {
-      name: document.getElementById('fullName').value,
-      mrdNumber: document.getElementById('mrdNumber').value,
-      age: document.getElementById('age').value, // Updated to use new age input
-      gender: document.getElementById('gender').value,
-      phone: document.getElementById('phone').value,
-      email: document.getElementById('email').value
-    },
-    medicalHistory: {
-      pastHistory: document.getElementById('pastMedicalHistory').value,
-      familyHistory: document.getElementById('familyHistory').value,
-      medications: document.getElementById('currentMedications').value,
-      allergies: document.getElementById('allergies').value
-    },
-    symptoms: {
-      chiefComplaint: document.getElementById('chiefComplaint').value,
-      duration: document.getElementById('symptomDuration').value,
-      visualSymptoms: Array.from(document.getElementById('visualSymptoms').selectedOptions).map(opt => opt.value),
-      ocularSymptoms: Array.from(document.getElementById('ocularSymptoms').selectedOptions).map(opt => opt.value),
-      notes: document.getElementById('symptomNotes').value
-    },
-    examination: {
-      vaLeft: document.getElementById('vaLeft').value,
-      vaRight: document.getElementById('vaRight').value,
-      iopLeft: document.getElementById('iopLeft').value,
-      iopRight: document.getElementById('iopRight').value,
-      notes: document.getElementById('examNotes').value
-    },
-    diagnosis: {
-      findings: document.getElementById('clinicalFindings').value,
-      diagnosis: document.getElementById('diagnosis').value,
-      differential: document.getElementById('differentialDx').value,
-      treatment: document.getElementById('treatmentPlan').value,
-      education: document.getElementById('patientEducation').value,
-      followup: document.getElementById('followupPlan').value
-    },
-    prescription: {
-      sph: document.getElementById('sph').value,
-      cyl: document.getElementById('cyl').value,
-      axis: document.getElementById('axis').value,
-      add: document.getElementById('add').value,
-      notes: document.getElementById('rxNotes').value
-    }
+  // Handle "Other" options for all relevant dropdowns
+  const otherContainers = {
+    'ocularHistory': 'otherOcularContainer',
+    'medicalHistory': 'otherMedicalContainer',
+    'allergies': 'otherAllergyContainer',
+    'familyHistory': 'otherFamilyContainer',
+    'occupation': 'otherOccupationContainer',
+    'hobbies': 'otherHobbiesContainer',
+    'systemicSymptoms': 'otherSystemicContainer'
   };
 
-  return formData;
-}
-
-// Modified DOMContentLoaded to remove database initialization
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize tab click handlers
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-      const tabId = this.getAttribute('data-tab');
-      switchTab(tabId);
+  Object.entries(otherContainers).forEach(([selectId, containerId]) => {
+    $(`#${selectId}`).on('change', function() {
+      const selectedValues = $(this).val() || [];
+      const container = document.getElementById(containerId);
+      
+      if (selectedValues.includes('other')) {
+        container.style.display = 'block';
+        requestAnimationFrame(() => {
+          container.classList.add('fade-enter-active');
+        });
+      } else {
+        container.classList.remove('fade-enter-active');
+        container.style.display = 'none';
+      }
     });
   });
 
-  // Set initial active tab
-  switchTab('info');
-
-  // Initialize dropdowns after a small delay to ensure Select2 is loaded
-  setTimeout(() => {
-    initializeSymptomDropdowns();
-    populateVAOptions();
-  }, 100);
+  // Handle recurrent systemic symptoms
+  $('#systemicDuration').on('change', function() {
+    const container = document.getElementById('recurrentDetailsContainer');
+    if (this.value === 'recurrent') {
+      container.style.display = 'block';
+      requestAnimationFrame(() => {
+        container.classList.add('fade-enter-active');
+      });
+    } else {
+      container.classList.remove('fade-enter-active');
+      container.style.display = 'none';
+    }
+  });
 });
 
-// Add this function to update visual acuity interpretation
-function updateVAInterpretation() {
-  const vaLeft = document.getElementById('vaLeft').value;
-  const vaRight = document.getElementById('vaRight').value;
-  const interpretationDiv = document.getElementById('vaInterpretation');
+// Update handleProcedureChange function
+function handleProcedureChange() {
+  const procedures = $('#procedures').val() || [];
+  const refractionContainer = document.getElementById('refractionResults');
   
-  // Update eye colors
-  updateEyeColors(vaLeft, 'left');
-  updateEyeColors(vaRight, 'right');
+  if (procedures.includes('refraction')) {  
+    refractionContainer.style.display = 'block';
+    requestAnimationFrame(() => {
+      refractionContainer.classList.add('fade-enter-active');
+    });
+  } else {
+    refractionContainer.classList.remove('fade-enter-active');
+    refractionContainer.style.display = 'none';
+  }
+}
+
+// Export to PDF function
+async function exportToPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let yPos = 20;
   
-  if (!vaLeft && !vaRight) {
-    interpretationDiv.innerHTML = 'Select visual acuity measurements above to see interpretation.';
-    interpretationDiv.classList.remove('has-value');
-    return;
+  // Add current date to header
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  
+  // Header with date
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.text("Focus EMR.AI - Patient Report", 20, yPos);
+  doc.setFontSize(10);
+  doc.text(currentDate, doc.internal.pageSize.width - 20, yPos, { align: 'right' });
+  yPos += 15;
+
+  // Helper function to add section headers with blue color
+  function addSectionHeader(text, y) {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.setTextColor(33, 150, 243); // Blue color
+    doc.text(text, 20, y);
+    
+    // Add blue line under section header
+    doc.setDrawColor(33, 150, 243);
+    doc.setLineWidth(0.5);
+    doc.line(20, y + 1, doc.internal.pageSize.width - 20, y + 1);
+    
+    doc.setTextColor(0, 0, 0); // Reset to black
+    doc.setFont("helvetica", "normal");
+    return y + 10;
   }
 
-  interpretationDiv.classList.add('has-value');
+  // Patient Information Section
+  yPos = addSectionHeader("Patient Information", yPos);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
   
-  let interpretation = '<h3>Visual Acuity Interpretation</h3><div class="va-details">';
+  const fullName = document.getElementById('fullName').value || 'N/A';
+  const mrdNumber = document.getElementById('mrdNumber').value || 'N/A';
+  const age = document.getElementById('age').value || 'N/A';
+  const gender = document.getElementById('gender').value || 'N/A';
+  const phone = document.getElementById('phone').value || 'N/A';
+  const email = document.getElementById('email').value || 'N/A';
   
-  // Interpret Left Eye
-  if (vaLeft) {
-    interpretation += '<div class="va-section"><strong>Left Eye (OS):</strong> ';
-    interpretation += getVAStatusHTML(vaLeft);
-    interpretation += '</div>';
+  yPos += 5;
+  doc.text(`Name: ${fullName}`, 20, yPos); yPos += 7;
+  doc.text(`MRD Number: ${mrdNumber}`, 20, yPos); yPos += 7;
+  doc.text(`Age: ${age}`, 20, yPos); yPos += 7;
+  doc.text(`Gender: ${gender}`, 20, yPos); yPos += 7;
+  doc.text(`Phone: ${phone}`, 20, yPos); yPos += 7;
+  doc.text(`Email: ${email}`, 20, yPos); yPos += 15;
+
+  // Medical History Section
+  yPos = addSectionHeader("Medical History", yPos);
+  yPos += 5;
+  
+  const ocularHistory = $('#ocularHistory').val()?.join(', ') || 'N/A';
+  const medicalHistory = $('#medicalHistory').val()?.join(', ') || 'N/A';
+  const allergies = $('#allergies').val()?.join(', ') || 'N/A';
+  const familyHistory = $('#familyHistory').val()?.join(', ') || 'N/A';
+  
+  doc.text(`Ocular History: ${ocularHistory}`, 20, yPos); yPos += 7;
+  doc.text(`Medical History: ${medicalHistory}`, 20, yPos); yPos += 7;
+  doc.text(`Allergies: ${allergies}`, 20, yPos); yPos += 7;
+  doc.text(`Family History: ${familyHistory}`, 20, yPos); yPos += 15;
+
+  // Signs & Symptoms Section
+  yPos = addSectionHeader("Signs & Symptoms", yPos);
+  yPos += 5;
+  
+  const chiefComplaint = $('#chiefComplaint').val() || 'N/A';
+  const visualSymptoms = $('#visualSymptoms').val()?.join(', ') || 'N/A';
+  const ocularSymptoms = $('#ocularSymptoms').val()?.join(', ') || 'N/A';
+  const purposeOfVisit = $('#purposeOfVisit').val() || 'N/A';
+  const otherPurpose = purposeOfVisit === 'Other' ? 
+    document.getElementById('otherPurpose').value || 'N/A' : '';
+  
+  doc.text(`Purpose of Visit: ${purposeOfVisit}${otherPurpose ? ` - ${otherPurpose}` : ''}`, 20, yPos); yPos += 7;
+  doc.text(`Chief Complaint: ${chiefComplaint}`, 20, yPos); yPos += 7;
+  doc.text(`Visual Symptoms: ${visualSymptoms}`, 20, yPos); yPos += 7;
+  doc.text(`Ocular Symptoms: ${ocularSymptoms}`, 20, yPos); yPos += 15;
+
+  // Examination Section
+  yPos = addSectionHeader("Examination", yPos);
+  yPos += 5;
+  
+  // Create table for Refraction Results
+  if ($('#procedures').val()?.includes('refraction')) {
+    // Add Refraction Results table
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    
+    // Table headers
+    const headers = ['Eye', 'SPH', 'CYL', 'AXIS'];
+    const colWidths = [30, 30, 30, 30];
+    const startX = 20;
+    let currentY = yPos;
+    
+    // Draw table header
+    doc.setFillColor(233, 236, 239); // Light gray background
+    doc.rect(startX, currentY, 120, 7, 'F');
+    doc.setTextColor(33, 150, 243); // Blue color for headers
+    doc.setFont("helvetica", "bold");
+    
+    headers.forEach((header, i) => {
+      doc.text(header, startX + (i * colWidths[0]), currentY + 5);
+    });
+    
+    currentY += 7;
+    doc.setTextColor(0);
+    doc.setFont("helvetica", "normal");
+
+    // Right Eye data
+    const rightEyeData = [
+      'OD',
+      formatPlusSign(document.getElementById('retinoscopySphRight').value) || 'N/A',
+      formatPlusSign(document.getElementById('retinoscopyCylRight').value) || 'N/A',
+      document.getElementById('retinoscopyAxisRight').value || 'N/A'
+    ];
+    
+    // Left Eye data
+    const leftEyeData = [
+      'OS', 
+      formatPlusSign(document.getElementById('retinoscopySphLeft').value) || 'N/A',
+      formatPlusSign(document.getElementById('retinoscopyCylLeft').value) || 'N/A',
+      document.getElementById('retinoscopyAxisLeft').value || 'N/A'
+    ];
+
+    // Draw data rows
+    [rightEyeData, leftEyeData].forEach((rowData, rowIndex) => {
+      // Alternate row background
+      if (rowIndex % 2 === 0) {
+        doc.setFillColor(249, 249, 249);
+        doc.rect(startX, currentY, 120, 7, 'F');
+      }
+      
+      rowData.forEach((cell, cellIndex) => {
+        doc.text(String(cell), startX + (cellIndex * colWidths[0]), currentY + 5);
+      });
+      currentY += 7;
+    });
+
+    yPos = currentY + 10;
+
+    // Add prescription table with similar format
+    yPos = addSectionHeader("Final Prescription", yPos);
+    yPos += 5;
+    
+    // Reset for prescription table
+    currentY = yPos;
+    
+    // Prescription table header
+    doc.setFillColor(233, 236, 239);
+    doc.rect(startX, currentY, 120, 7, 'F');
+    doc.setTextColor(33, 150, 243);
+    doc.setFont("helvetica", "bold");
+    
+    const rxHeaders = ['Eye', 'SPH', 'CYL', 'AXIS', 'ADD'];
+    rxHeaders.forEach((header, i) => {
+      doc.text(header, startX + (i * 25), currentY + 5);
+    });
+    
+    currentY += 7;
+    doc.setTextColor(0);
+    doc.setFont("helvetica", "normal");
+
+    // Prescription data rows
+    const rxRightEye = [
+      'OD',
+      formatPlusSign(document.getElementById('sphRight').value) || 'N/A',
+      formatPlusSign(document.getElementById('cylRight').value) || 'N/A',
+      document.getElementById('axisRight').value || 'N/A',
+      formatPlusSign(document.getElementById('addRight').value) || 'N/A'
+    ];
+    
+    const rxLeftEye = [
+      'OS',
+      formatPlusSign(document.getElementById('sphLeft').value) || 'N/A',
+      formatPlusSign(document.getElementById('cylLeft').value) || 'N/A',
+      document.getElementById('axisLeft').value || 'N/A',
+      formatPlusSign(document.getElementById('addLeft').value) || 'N/A'
+    ];
+
+    [rxRightEye, rxLeftEye].forEach((rowData, rowIndex) => {
+      if (rowIndex % 2 === 0) {
+        doc.setFillColor(249, 249, 249);
+        doc.rect(startX, currentY, 125, 7, 'F');
+      }
+      
+      rowData.forEach((cell, cellIndex) => {
+        doc.text(String(cell), startX + (cellIndex * 25), currentY + 5);
+      });
+      currentY += 7;
+    });
+
+    yPos = currentY + 10;
   }
+
+  // Assessment Section
+  yPos = addSectionHeader("Assessment", yPos);
+  yPos += 5;
   
-  // Interpret Right Eye
-  if (vaRight) {
-    interpretation += '<div class="va-section"><strong>Right Eye (OD):</strong> ';
-    interpretation += getVAStatusHTML(vaRight);
-    interpretation += '</div>';
-  }
+  const primaryDiagnosis = document.getElementById('primaryDiagnosis').value || 'N/A';
+  const secondaryFindings = document.getElementById('secondaryFindings').value || 'N/A';
+  const severity = document.getElementById('severity').value || 'N/A';
   
-  // Add comparison if both eyes have measurements
-  if (vaLeft && vaRight) {
-    interpretation += '<div class="va-comparison"><strong>Comparison:</strong> ';
-    if (vaLeft === vaRight) {
-      interpretation += 'Visual acuity is equal in both eyes.';
-    } else {
-      interpretation += 'Visual acuity differs between eyes - further investigation recommended.';
-    }
-    interpretation += '</div>';
-  }
+  doc.text(`Primary Diagnosis: ${primaryDiagnosis}`, 20, yPos); yPos += 7;
+  doc.text(`Secondary Findings: ${secondaryFindings}`, 20, yPos); yPos += 7;
+  doc.text(`Severity: ${severity}`, 20, yPos); yPos += 15;
+
+  // Treatment Plan Section
+  yPos = addSectionHeader("Treatment Plan", yPos);
+  yPos += 5;
   
-  interpretation += '</div>';
-  interpretationDiv.innerHTML = interpretation;
+  const medications = $('#medications').val()?.join(', ') || 'N/A';
+  const investigations = $('#additionalInvestigations').val()?.join(', ') || 'N/A';
+  const followUp = document.getElementById('followUpSchedule').value || 'N/A';
+  const education = $('#patientEducation').val()?.join(', ') || 'N/A';
+  
+  doc.text(`Medications: ${medications}`, 20, yPos); yPos += 7;
+  doc.text(`Additional Investigations: ${investigations}`, 20, yPos); yPos += 7;
+  doc.text(`Follow-up Schedule: ${followUp}`, 20, yPos); yPos += 7;
+  doc.text(`Patient Education: ${education}`, 20, yPos);
+
+  // Save PDF
+  doc.save(`Focus_EMR_AI_Report_${fullName}_${new Date().toISOString().split('T')[0]}.pdf`);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // ... existing code ...
+  
+  $('#procedures').on('change', handleProcedureChange);
+});
+
+function formatPlusSign(value) {
+  if (!value) return value;
+  const num = parseFloat(value);
+  if (isNaN(num)) return value;
+  // Format to 2 decimal places and add + for positive numbers
+  return num >= 0 ? `+${num.toFixed(2)}` : `${num.toFixed(2)}`;
+}
+
+function exportToMarkdown() {
+  let markdown = `# Focus EMR.AI - Patient Report\n`;
+  markdown += `Generated on: ${new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })}\n\n`;
+
+  // Patient Information section - keep existing code
+  // Medical History section - keep existing code 
+  // Signs & Symptoms section - keep existing code
+  // Visual Acuity section - keep existing code
+  // IOP section - keep existing code
+  // Refraction Results section - keep existing code
+  // Final Prescription section - keep existing code
+  // Assessment section - keep existing code
+  // Treatment Plan section - keep existing code
+
+  // Instead of creating and downloading file, copy to clipboard
+  navigator.clipboard.writeText(markdown).then(() => {
+    // Show success feedback
+    const feedbackEl = document.createElement('div');
+    feedbackEl.textContent = 'Markdown copied to clipboard!';
+    feedbackEl.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--success);
+      color: white;
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      animation: fadeInOut 2s forwards;
+    `;
+    document.body.appendChild(feedbackEl);
+    
+    setTimeout(() => {
+      feedbackEl.remove();
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy markdown:', err);
+    alert('Failed to copy markdown to clipboard');
+  });
+}
+
+function formatPlusSignMD(value) {
+  if (!value) return 'N/A';
+  const num = parseFloat(value);
+  if (isNaN(num)) return 'N/A';
+  return num >= 0 ? `+${num.toFixed(2)}` : `${num.toFixed(2)}`;
 }
 </script>
 
@@ -1188,14 +1507,26 @@ function updateVAInterpretation() {
 <body>
 
 <nav class="navbar">
-  <h1>Focus File</h1>
-  <div class="nav-download" onclick="generatePatientPDF()">
-    <span>Download</span>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="7 10 12 15 17 10"/>
-      <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
+  <h1>Focus EMR.AI</h1>
+  <div style="display: flex; gap: 10px;">
+    <button onclick="exportToMarkdown()" class="export-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+        <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"></path>
+        <line x1="9" y1="9" x2="15" y2="9"></line>
+        <line x1="9" y1="13" x2="15" y2="13"></line>
+        <line x1="9" y1="17" x2="13" y2="17"></line>
+      </svg>
+      Copy MD
+    </button>
+    <button onclick="exportToPDF()" class="export-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+        <polyline points="7 3 7 8 15 8"></polyline>
+      </svg>
+      Export PDF
+    </button>
   </div>
 </nav>
 
@@ -1205,8 +1536,8 @@ function updateVAInterpretation() {
       <div class="tab-container">
         <div class="tab-group">
           <button class="tab active" data-tab="info">Patient Info</button>
+          <button class="tab" data-tab="symptoms">Signs & Symptoms</button> 
           <button class="tab" data-tab="history">Medical History</button>
-          <button class="tab" data-tab="symptoms">Signs & Symptoms</button>
           <button class="tab" data-tab="exam">Examination</button>
           <button class="tab" data-tab="diagnosis">Assessment</button>
           <button class="tab" data-tab="prescription">Prescription</button>
@@ -1229,13 +1560,13 @@ function updateVAInterpretation() {
           
           <div class="form-group">
             <label>Age</label>
-            <input type="number" id="age" name="age" min="0" max="120" placeholder="Enter age" required>
+            <input type="number" id="age" name="age" min="0" max="120" required>
           </div>
           
           <div class="form-group">
             <label>Gender</label>
             <select id="gender" name="gender" class="ios-select">
-              <option value="">Select Gender</option>
+              <option value=""></option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
@@ -1254,111 +1585,267 @@ function updateVAInterpretation() {
         </form>
       </div>
 
-      <div class="tab-content" id="history" style="display: none;">
-        <h2>Medical History</h2>
-        
-        <div class="form-group">
-          <label>Past Medical History</label>
-          <textarea id="pastMedicalHistory" rows="3" placeholder="List significant medical conditions..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Family History</label>
-          <textarea id="familyHistory" rows="3" placeholder="List relevant family eye conditions..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Current Medications</label>
-          <textarea id="currentMedications" rows="3" placeholder="List current medications and dosages..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Allergies</label>
-          <textarea id="allergies" rows="2" placeholder="List medication and environmental allergies..."></textarea>
-        </div>
-      </div>
-
-      <div class="tab-content" id="symptoms" style="display: none;">
+      <div class="tab-content" id="symptoms">
         <h2>Signs & Symptoms</h2>
+        
+        <div class="form-group">
+          <label>Purpose of Visit</label>
+          <select id="purposeOfVisit" class="dropdown-select">
+            <option value=""></option>
+          </select>
+          <small>Select the primary reason for the visit</small>
+        </div>
+
+        <div id="otherPurposeContainer" class="duration-detail-container">
+          <label>Please specify other purpose</label>
+          <input type="text" id="otherPurpose" class="ios-select">
+        </div>
         
         <div class="form-group">
           <label>Chief Complaint</label>
           <select id="chiefComplaint" class="dropdown-select">
-            <option value="">Select chief complaint...</option>
+            <option value=""></option>
           </select>
           <small>Select the patient's main complaint or reason for visit</small>
         </div>
 
         <div class="form-group">
           <label>Duration</label>
-          <select id="symptomDuration" class="dropdown-select">
-            <option value="">Select duration...</option>
+          <select id="symptomDuration" class="ios-select" onchange="handleDurationChange()">
+            <option value=""></option>
             <option value="Sudden onset">Sudden onset</option>
             <option value="Gradual onset">Gradual onset</option>
             <option value="Few hours">Few hours</option>
-            <option value="Few days">Few days</option>
-            <option value="1-2 weeks">1-2 weeks</option>
-            <option value="2-4 weeks">2-4 weeks</option>
-            <option value="1-3 months">1-3 months</option>
-            <option value="3-6 months">3-6 months</option>
-            <option value="6-12 months">6-12 months</option>
-            <option value="More than 1 year">More than 1 year</option>
+            <option value="days">Days</option>
+            <option value="weeks">Weeks</option>
+            <option value="months">Months</option>
+            <option value="year">Years</option>
           </select>
         </div>
         
         <div class="form-group">
           <label>Visual Symptoms</label>
           <select id="visualSymptoms" class="dropdown-select" multiple>
-            <option value="">Select visual symptoms...</option>
           </select>
         </div>
         
         <div class="form-group">
           <label>Ocular Symptoms</label>
           <select id="ocularSymptoms" class="dropdown-select" multiple>
-            <option value="">Select ocular symptoms...</option>
           </select>
         </div>
 
         <div class="form-group">
           <label>Additional Notes</label>
-          <textarea id="symptomNotes" rows="3" placeholder="Add any additional notes or observations..."></textarea>
+          <textarea id="symptomNotes" rows="3"></textarea>
         </div>
       </div>
 
-      <div class="tab-content" id="exam" style="display: none;">
+      <div class="tab-content" id="history">
+        <h2>Medical History</h2>
+
+        <!-- 1. Ocular History -->
+        <div class="form-group">
+          <label>Ocular History</label>
+          <select id="ocularHistory" class="ios-select" multiple>
+            <option value="no_history">No History of Ocular Issues</option>
+            <option value="refractive">Refractive Errors (Myopia, Hyperopia, Astigmatism)</option>
+            <option value="presbyopia">Presbyopia</option>
+            <option value="cataract">Cataract Surgery</option>
+            <option value="glaucoma">Glaucoma Treatment</option>
+            <option value="retinal">Retinal Detachment</option>
+            <option value="diabetic">Diabetic Retinopathy</option>
+            <option value="amd">Age-Related Macular Degeneration</option> 
+            <option value="transplant">Corneal Transplant</option>
+            <option value="trauma">Ocular Trauma</option>
+            <option value="strabismus">Strabismus or Amblyopia</option>
+            <option value="uveitis">Uveitis</option>
+            <option value="infections">Eye Infections</option>
+            <option value="other">Other</option>
+          </select>
+          <div id="otherOcularContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
+          <select id="ocularDuration" class="ios-select">
+            <option value=""></option>
+            <option value="acute">Acute (<1 week)</option>
+            <option value="subacute">Subacute (1-4 weeks)</option>
+            <option value="chronic">Chronic (>4 weeks)</option>
+            <option value="longterm">Long-Term (>6 months)</option>
+          </select>
+        </div>
+
+        <!-- 2. Medical History -->
+        <div class="form-group">
+          <label>Medical History</label>
+          <select id="medicalHistory" class="ios-select" multiple>
+            <option value="none">No Known Medical Conditions</option>
+            <option value="diabetes">Diabetes Mellitus</option>
+            <option value="hypertension">Hypertension</option>
+            <option value="cardiac">Cardiovascular Disease</option>
+            <option value="thyroid">Thyroid Dysfunction</option>
+            <option value="autoimmune">Autoimmune Disorders</option>
+            <option value="neuro">Neurological Disorders</option>
+            <option value="respiratory">Chronic Respiratory Diseases</option>
+            <option value="kidney">Kidney Disease</option>
+            <option value="cancer">Cancer</option>
+            <option value="infectious">Infectious Diseases</option>
+            <option value="other">Other</option>
+          </select>
+          <div id="otherMedicalContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
+          <select id="medicalDuration" class="ios-select">
+            <option value=""></option>
+            <option value="new">Newly Diagnosed (<1 month)</option>
+            <option value="intermediate">Intermediate (1-6 months)</option>
+            <option value="longterm">Long-Term (>6 months)</option>
+          </select>
+        </div>
+
+        <!-- 3. Allergies -->
+        <div class="form-group">
+          <label>Allergies</label>
+          <select id="allergies" class="ios-select" multiple>
+            <option value="none">No Known Allergies</option>
+            <option value="seasonal">Seasonal Allergies</option>
+            <option value="drug">Drug Allergies</option>
+            <option value="food">Food Allergies</option>
+            <option value="latex">Latex Allergy</option>
+            <option value="contacts">Contact Lens Solutions</option>
+            <option value="other">Other</option>
+          </select>
+          <div id="otherAllergyContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
+          <select id="allergySeverity" class="ios-select">
+            <option value=""></option>
+            <option value="mild">Mild (e.g., Itching, Sneezing)</option>
+            <option value="moderate">Moderate (e.g., Swelling, Redness)</option>
+            <option value="severe">Severe (e.g., Anaphylaxis)</option>
+          </select>
+          <select id="allergyDuration" class="ios-select">
+            <option value=""></option>
+            <option value="recent">Recent (<3 months)</option>
+            <option value="intermediate">Intermediate (3-6 months)</option>
+            <option value="longterm">Long-Term (>6 months)</option>
+          </select>
+        </div>
+
+        <!-- 4. Family History -->
+        <div class="form-group">
+          <label>Family History</label>
+          <select id="familyHistory" class="ios-select" multiple>
+            <option value="none">No Significant Family History</option>
+            <option value="glaucoma">Glaucoma</option>
+            <option value="cataract">Cataract</option>
+            <option value="diabetic">Diabetic Retinopathy</option>
+            <option value="amd">Age-Related Macular Degeneration</option>
+            <option value="retinitis">Retinitis Pigmentosa</option>
+            <option value="keratoconus">Keratoconus</option>
+            <option value="strabismus">Strabismus or Amblyopia</option>
+            <option value="genetic">Genetic Eye Disorders</option>
+            <option value="other">Other</option>
+          </select>
+          <div id="otherFamilyContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
+          <select id="familyHistoryStatus" class="ios-select">
+            <option value=""></option>
+            <option value="ongoing">Ongoing</option>
+            <option value="resolved">Resolved (>5 years)</option>
+          </select>
+        </div>
+
+        <!-- 5. Social History -->
+        <div class="form-group">
+          <label>Social History</label>
+          
+          <!-- Smoking Status -->
+          <select id="smokingStatus" class="ios-select">
+            <option value=""></option>
+            <option value="never">Never Smoked</option>
+            <option value="current">Current Smoker</option>
+            <option value="past">Past Smoker</option>
+          </select>
+          
+          <!-- Alcohol Consumption -->
+          <select id="alcoholConsumption" class="ios-select">
+            <option value=""></option>
+            <option value="none">None</option>
+            <option value="occasional">Occasional</option>
+            <option value="regular">Regular</option>
+          </select>
+          
+          <!-- Occupation -->
+          <select id="occupation" class="ios-select">
+            <option value=""></option>
+            <option value="screen">Screen-Intensive Work</option>
+            <option value="outdoor">Outdoor Work (UV Exposure)</option>
+            <option value="highrisk">High-Risk Professions</option>
+            <option value="other">Other</option>
+          </select>
+          <div id="otherOccupationContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
+          
+          <!-- Hobbies -->
+          <select id="hobbies" class="ios-select" multiple>
+            <option value="reading">Prolonged Reading</option>
+            <option value="gaming">Digital Gaming</option>
+            <option value="sports">Sports</option>
+            <option value="other">Other</option>
+          </select>
+          <div id="otherHobbiesContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
+        </div>
+
+        <!-- 6. Systemic Symptoms -->
+        <div class="form-group">
+          <label>Systemic Symptoms</label>
+          <select id="systemicSymptoms" class="ios-select" multiple>
+            <option value="none">No Symptoms</option>
+            <option value="headache">Frequent Headaches</option>
+            <option value="dizziness">Dizziness or Vertigo</option>
+            <option value="fatigue">Fatigue or Weakness</option>
+            <option value="tingling">Tingling or Numbness</option>
+            <option value="blurred">Blurred Vision with Position Changes</option>
+            <option value="other">Other</option>
+          </select>
+          <div id="otherSystemicContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
+          <select id="systemicDuration" class="ios-select">
+            <option value=""></option>
+            <option value="acute">Acute (<1 week)</option>
+            <option value="subacute">Subacute (1-4 weeks)</option>
+            <option value="chronic">Chronic (>4 weeks)</option>
+            <option value="recurrent">Recurrent</option>
+          </select>
+          <div id="recurrentDetailsContainer" class="duration-detail-container">
+            <input type="text" class="ios-select" placeholder="Specify frequency">
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="exam">
         <h2>Eye Examination</h2>
         
         <div class="eye-diagram">
-          <svg viewBox="0 0 200 100" width="100%" height="150">
+          <svg viewBox="0 0 200 100" width="100%" height="200">
             <g class="eye left">
-              <!-- White background -->
-              <circle cx="50" cy="50" r="30" fill="white" stroke="#2196F3" stroke-width="2"/>
-              <!-- Combined iris and pupil group for animation -->
-              <g class="iris-group">
-                <!-- Iris -->
-                <circle cx="50" cy="50" r="12" class="iris" fill="#2196F3"/>
-                <!-- Pupil -->
-                <circle cx="50" cy="50" r="4" fill="#000" class="pupil"/>
-              </g>
-              <!-- Removed upper and lower lid paths -->
+              <circle cx="50" cy="50" r="40" fill="white" stroke="#2196F3" stroke-width="2"/>
+              <circle cx="50" cy="50" r="15" fill="#2196F3"/>
+              <circle cx="50" cy="50" r="5" fill="#000"/>
             </g>
-            
             <g class="eye right">
-              <!-- White background -->
-              <circle cx="150" cy="50" r="30" fill="white" stroke="#2196F3" stroke-width="2"/>
-              <!-- Combined iris and pupil group for animation -->
-              <g class="iris-group">
-                <!-- Iris -->
-                <circle cx="150" cy="50" r="12" class="iris" fill="#2196F3"/>
-                <!-- Pupil -->
-                <circle cx="150" cy="50" r="4" fill="#000" class="pupil"/>
-              </g>
-              <!-- Removed upper and lower lid paths -->
+              <circle cx="150" cy="50" r="40" fill="white" stroke="#2196F3" stroke-width="2"/>
+              <circle cx="150" cy="50" r="15" fill="#2196F3"/>
+              <circle cx="150" cy="50" r="5" fill="#000"/>
             </g>
-            
-            <text x="50" y="95" text-anchor="middle" fill="#666">OS</text>
-            <text x="150" y="95" text-anchor="middle" fill="#666">OD</text>
+            <text x="50" y="100" text-anchor="middle" fill="#666">OS</text>
+            <text x="150" y="100" text-anchor="middle" fill="#666">OD</text>
           </svg>
         </div>
 
@@ -1369,17 +1856,79 @@ function updateVAInterpretation() {
             <div>
               <label>Left Eye (OS)</label>
               <div class="va-selector">
-                <select id="vaLeft" onchange="updateVAInterpretation()">
-                  <option value="">Select VA</option>
+                <select id="vaLeftUnaided" onchange="updateVAInterpretation()">
+                  <option value=""></option>
+                  <option value="6/6">6/6</option>
+                  <option value="6/9">6/9</option>
+                  <option value="6/12">6/12</option>
+                  <option value="6/18">6/18</option>
+                  <option value="6/24">6/24</option>
+                  <option value="6/36">6/36</option>
+                  <option value="6/60">6/60</option>
+                  <option value="CF 1m">CF 1m</option>
+                  <option value="CF 2m">CF 2m</option>
+                  <option value="CF 3m">CF 3m</option>
+                  <option value="HM">HM</option>
+                  <option value="PL">PL</option>
+                  <option value="NPL">NPL</option>
                 </select>
+                <small>Unaided</small>
+                <select id="vaLeftAided" onchange="updateVAInterpretation()">
+                  <option value=""></option>
+                  <option value="6/6">6/6</option>
+                  <option value="6/9">6/9</option>
+                  <option value="6/12">6/12</option>
+                  <option value="6/18">6/18</option>
+                  <option value="6/24">6/24</option>
+                  <option value="6/36">6/36</option>
+                  <option value="6/60">6/60</option>
+                  <option value="CF 1m">CF 1m</option>
+                  <option value="CF 2m">CF 2m</option>
+                  <option value="CF 3m">CF 3m</option>
+                  <option value="HM">HM</option>
+                  <option value="PL">PL</option>
+                  <option value="NPL">NPL</option>
+                </select>
+                <small>Aided</small>
               </div>
             </div>
             <div>
               <label>Right Eye (OD)</label>
               <div class="va-selector">
-                <select id="vaRight" onchange="updateVAInterpretation()">
-                  <option value="">Select VA</option>
+                <select id="vaRightUnaided" onchange="updateVAInterpretation()">
+                  <option value=""></option>
+                  <option value="6/6">6/6</option>
+                  <option value="6/9">6/9</option>
+                  <option value="6/12">6/12</option>
+                  <option value="6/18">6/18</option>
+                  <option value="6/24">6/24</option>
+                  <option value="6/36">6/36</option>
+                  <option value="6/60">6/60</option>
+                  <option value="CF 1m">CF 1m</option>
+                  <option value="CF 2m">CF 2m</option>
+                  <option value="CF 3m">CF 3m</option>
+                  <option value="HM">HM</option>
+                  <option value="PL">PL</option>
+                  <option value="NPL">NPL</option>
                 </select>
+                <small>Unaided</small>
+                <select id="vaRightAided" onchange="updateVAInterpretation()">
+                  <option value=""></option>
+                  <option value="6/6">6/6</option>
+                  <option value="6/9">6/9</option>
+                  <option value="6/12">6/12</option>
+                  <option value="6/18">6/18</option>
+                  <option value="6/24">6/24</option>
+                  <option value="6/36">6/36</option>
+                  <option value="6/60">6/60</option>
+                  <option value="CF 1m">CF 1m</option>
+                  <option value="CF 2m">CF 2m</option>
+                  <option value="CF 3m">CF 3m</option>
+                  <option value="HM">HM</option>
+                  <option value="PL">PL</option>
+                  <option value="NPL">NPL</option>
+                </select>
+                <small>Aided</small>
               </div>
             </div>
           </div>
@@ -1399,145 +1948,214 @@ function updateVAInterpretation() {
               <input type="number" id="iopLeft">
             </div>
             <div>
-              <label>Right Eye (mmHg)</label>
+              <label>Right Eye (OD)</label>
               <input type="number" id="iopRight">
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Notes</label>
-          <textarea id="examNotes" rows="4"></textarea>
+          <label>Procedures</label>
+          <select id="procedures" class="ios-select" multiple>
+            <option value="refraction">Refraction (Subjective/Objective)</option>
+            <option value="retinoscopy">Retinoscopy</option>
+            <option value="va_testing">Visual acuity testing</option>
+            <option value="slit_lamp">Slit lamp examination</option>
+            <option value="tonometry">Tonometry</option>
+            <option value="fundus">Fundus examination</option>
+            <option value="binocular">Binocular vision assessment</option>
+            <option value="contact_lens">Contact lens fitting</option>
+            <option value="dispensing">Optical dispensing</option>
+            <option value="counseling">Patient counseling</option>
+            <option value="other">Other</option>
+          </select>
+          <div id="otherProcedureContainer" class="duration-detail-container">
+            <label>Other procedure(s</label>
+            <input type="text" class="ios-select">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Examination Notes</label>
+          <textarea id="examNotes" rows="3"></textarea>
+        </div>
+
+        <div id="refractionResults" class="form-group">
+          <label>Retinoscopy Results</label>
+          <div class="prescription-grid">
+            <div>
+              <h3>Right Eye (OD)</h3>
+              <div class="form-group">
+                <label>SPH (Sphere)</label>
+                <input type="number" id="retinoscopySphRight" step="0.25">
+              </div>
+              <div class="form-group">
+                <label>CYL (Cylinder)</label>
+                <input type="number" id="retinoscopyCylRight" step="0.25">
+              </div>
+              <div class="form-group">
+                <label>Axis</label>
+                <input type="number" id="retinoscopyAxisRight" min="1" max="180">
+              </div>
+            </div>
+            <div>
+              <h3>Left Eye (OS)</h3>
+              <div class="form-group">
+                <label>SPH (Sphere)</label>
+                <input type="number" id="retinoscopySphLeft" step="0.25">
+              </div>
+              <div class="form-group">
+                <label>CYL (Cylinder)</label>
+                <input type="number" id="retinoscopyCylLeft" step="0.25">
+              </div>
+              <div class="form-group">
+                <label>Axis</label>
+                <input type="number" id="retinoscopyAxisLeft" min="1" max="180">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="tab-content" id="diagnosis" style="display: none;">
-        <h2>Assessment & Plan</h2>
+      <div class="tab-content" id="diagnosis">
+        <h2>Diagnosis and Assessment</h2>
         
         <div class="form-group">
-          <label>Clinical Findings</label>
-          <textarea id="clinicalFindings" rows="3" placeholder="Summary of key clinical findings..."></textarea>
+          <label>Primary Diagnosis</label>
+          <select id="primaryDiagnosis" class="assessment-select">
+            <option value=""></option>
+          </select>
+          <div id="otherDiagnosisContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
         </div>
         
         <div class="form-group">
-          <label>Diagnosis</label>
-          <input type="text" id="diagnosis" placeholder="Primary diagnosis">
-          <textarea id="differentialDx" rows="2" placeholder="Differential diagnoses..."></textarea>
+          <label>Secondary Findings</label>
+          <select id="secondaryFindings" class="assessment-select" multiple>
+            <option value="none">No Secondary Findings</option>
+          </select>
+          <div id="otherFindingsContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
         </div>
         
         <div class="form-group">
-          <label>Treatment Plan</label>
-          <textarea id="treatmentPlan" rows="3" placeholder="Recommended treatments and instructions..."></textarea>
+          <label>Severity of Condition</label>
+          <select id="severity" class="ios-select">
+            <option value=""></option>
+            <option value="mild">Mild</option>
+            <option value="moderate">Moderate</option>
+            <option value="severe">Severe</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tab-content" id="prescription">
+        <h2>Prescription and Recommendations</h2>
+        
+        <div class="prescription-grid">
+          <div>
+            <h3>Right Eye (OD)</h3>
+            <div class="form-group">
+              <label>SPH (Sphere)</label>
+              <input type="number" id="sphRight" step="0.25">
+            </div>
+            <div class="form-group">
+              <label>CYL (Cylinder)</label>
+              <input type="number" id="cylRight" step="0.25">
+            </div>
+            <div class="form-group">
+              <label>Axis</label>
+              <input type="number" id="axisRight" min="1" max="180">
+            </div>
+            <div class="form-group">
+              <label>Add</label>
+              <input type="number" id="addRight" step="0.25">
+            </div>
+          </div>
+          <div>
+            <h3>Left Eye (OS)</h3>
+            <div class="form-group">
+              <label>SPH (Sphere)</label>
+              <input type="number" id="sphLeft" step="0.25">
+            </div>
+            <div class="form-group">
+              <label>CYL (Cylinder)</label>
+              <input type="number" id="cylLeft" step="0.25">
+            </div>
+            <div class="form-group">
+              <label>Axis</label>
+              <input type="number" id="axisLeft" min="1" max="180">
+            </div>
+            <div class="form-group">
+              <label>Add</label>
+              <input type="number" id="addLeft" step="0.25">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="revisit">
+        <h2>Revisit and Follow-Up</h2>
+        
+        <div class="form-group">
+          <label>Revisit Visual Acuity - Right Eye</label>
+          <select id="revisitVaRight">
+            <option value=""></option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Revisit Visual Acuity - Left Eye</label>
+          <select id="revisitVaLeft">
+            <option value=""></option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Follow-Up Schedule</label>
+          <input type="date" id="followUpSchedule">
+        </div>
+        
+        <div class="form-group">
+          <label>Medications</label>
+          <select id="medications" class="ios-select" multiple>
+            <option value="none">No Medications</option>
+          </select>
+          <div id="otherMedicationContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Additional Investigations</label>
+          <select id="additionalInvestigations" class="ios-select" multiple>
+            <option value="none">No Investigations</option>
+          </select>
+          <div id="otherInvestigationContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
+          </div>
         </div>
         
         <div class="form-group">
           <label>Patient Education</label>
-          <textarea id="patientEducation" rows="2" placeholder="Information provided to patient..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Follow-up Plan</label>
-          <input type="text" id="followupPlan" placeholder="Follow-up schedule">
-        </div>
-      </div>
-
-      <div class="tab-content" id="prescription" style="display: none;">
-        <h2>Prescription</h2>
-        
-        <div class="prescription-grid">
-          <div class="form-group">
-            <label>Sphere (SPH)</label>
-            <input type="number" step="0.25" id="sph">
-          </div>
-          
-          <div class="form-group">
-            <label>Cylinder (CYL)</label>
-            <input type="number" step="0.25" id="cyl">
-          </div>
-          
-          <div class="form-group">
-            <label>Axis</label>
-            <input type="number" id="axis">
-          </div>
-          
-          <div class="form-group">
-            <label>Add</label>
-            <input type="number" step="0.25" id="add">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Recommendations</label>
-          <textarea id="rxNotes" rows="4"></textarea>
-        </div>
-      </div>
-
-      <div class="tab-content" id="revisit" style="display: none;">
-        <h2>Patient Revisit</h2>
-        
-        <div class="form-group">
-          <label>Reason for Revisit</label>
-          <select id="revisitReason">
-            <option value="routine">Routine Check-up</option>
-            <option value="followup">Treatment Follow-up</option>
-            <option value="new">New Symptoms</option>
-            <option value="emergency">Emergency Visit</option>
+          <select id="patientEducation" class="ios-select" multiple>
+            <option value="none">No Education Needed</option>
           </select>
-        </div>
-
-        <div class="form-group">
-          <label>Symptoms Update</label>
-          <textarea id="symptomsUpdate" rows="3" placeholder="Note any new or ongoing symptoms since last visit..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Visual Acuity Changes</label>
-          <div class="prescription-grid">
-            <div>
-              <label>Left Eye (OS)</label>
-              <select id="revisitVaLeft">
-                <option value="">Select VA</option>
-              </select>
-              <small>Previous: <span id="previousVaLeft">6/6</span></small>
-            </div>
-            <div>
-              <label>Right Eye (OD)</label>
-              <select id="revisitVaRight">
-                <option value="">Select VA</option>
-              </select>
-              <small>Previous: <span id="previousVaRight">6/6</span></small>
-            </div>
+          <div id="otherEducationContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
           </div>
         </div>
-
+        
         <div class="form-group">
-          <label>Clinical Findings</label>
-          <textarea id="revisitFindings" rows="3" placeholder="Document findings from current examination..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Diagnostic Tests</label>
-          <div class="checkbox-group">
-            <label><input type="checkbox" name="tests" value="visualField"> Visual Field Test</label>
-            <label><input type="checkbox" name="tests" value="oct"> OCT Scan</label>
-            <label><input type="checkbox" name="tests" value="tonometry"> Tonometry</label>
-            <label><input type="checkbox" name="tests" value="dilation"> Dilated Exam</label>
+          <label>Specialist Referral</label>
+          <select id="specialistReferral" class="ios-select" multiple>
+            <option value="none">No Referral Needed</option>
+          </select>
+          <div id="otherReferralContainer" class="duration-detail-container">
+            <input type="text" class="ios-select">
           </div>
-        </div>
-
-        <div class="form-group">
-          <label>Treatment Plan Review</label>
-          <textarea id="treatmentReview" rows="3" placeholder="Review previous treatment plan effectiveness..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>New Recommendations</label>
-          <textarea id="newRecommendations" rows="3" placeholder="Document any changes to treatment plan..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Next Appointment</label>
-          <input type="date" id="nextAppointment">
         </div>
       </div>
     </main>
