@@ -607,6 +607,57 @@ input:checked + .slider:before {
 .duration-detail-container {
   display: none;
 }
+
+.add-power-info {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-icon {
+  cursor: help;
+  color: var(--primary);
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 12px;
+  font-style: italic;
+  transition: all 0.2s ease;
+}
+
+.info-icon:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.add-power-tooltip {
+  position: absolute;
+  top: -8px;
+  left: calc(100% + 8px);
+  background: white;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  font-size: 12px;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.2s ease;
+  z-index: 100;
+  border: 1px solid var(--primary);
+}
+
+.info-icon:hover + .add-power-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -957,7 +1008,11 @@ input:checked + .slider:before {
             </div>
             <div class="form-group">
               <label>Add</label>
-              <input type="number" id="addRight" step="0.25" title="Enter add value">
+              <div class="add-power-info">
+                <input type="number" id="addRight" step="0.25" title="Enter add value">
+                <span class="info-icon" id="addRightInfo">i</span>
+                <div class="add-power-tooltip" id="addRightTooltip">Loading suggestion...</div>
+              </div>
             </div>
           </div>
           <div>
@@ -976,7 +1031,11 @@ input:checked + .slider:before {
             </div>
             <div class="form-group">
               <label>Add</label>
-              <input type="number" id="addLeft" step="0.25" title="Enter add value">
+              <div class="add-power-info">
+                <input type="number" id="addLeft" step="0.25" title="Enter add value">
+                <span class="info-icon" id="addLeftInfo">i</span>
+                <div class="add-power-tooltip" id="addLeftTooltip">Loading suggestion...</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1962,6 +2021,63 @@ function updateRecentSelections(fieldName, value) {
   recentSelections[fieldName] = recentSelections[fieldName].slice(0, maxItems);
 }
 
+// Add this function after the other function definitions
+function suggestAddPower(age) {
+  const addPowerTable = {
+    40: 1.00,
+    41: 1.00,
+    42: 1.25,
+    43: 1.25,
+    44: 1.25,
+    45: 1.50,
+    46: 1.50,
+    47: 1.75,
+    48: 1.75,
+    49: 1.75,
+    50: 2.00,
+    51: 2.00,
+    52: 2.00,
+    53: 2.25,
+    54: 2.25,
+    55: 2.50,
+    56: 2.50,
+    57: 2.75,
+    58: 2.75,
+    59: 2.75,
+    60: 3.00
+  };
+
+  // If age is less than 40, no add power needed
+  if (age < 40) return null;
+  
+  // If age is greater than 60, use maximum add power
+  if (age > 60) return 3.00;
+  
+  // Return the specific add power for the age
+  return addPowerTable[age] || null;
+}
+
+// Add event listener for age input to update add power suggestion
+document.addEventListener('DOMContentLoaded', function() {
+  const ageInput = document.getElementById('age');
+  const addRightInput = document.getElementById('addRight');
+  const addLeftInput = document.getElementById('addLeft');
+
+  ageInput.addEventListener('change', function() {
+    const age = parseInt(this.value);
+    const suggestedAdd = suggestAddPower(age);
+    
+    if (suggestedAdd) {
+      // Only suggest if add fields are empty or user confirms change
+      if (!addRightInput.value && !addLeftInput.value || 
+          confirm(`Based on age ${age}, the suggested Add power is +${suggestedAdd.toFixed(2)}D. Would you like to update the Add power?`)) {
+        addRightInput.value = suggestedAdd.toFixed(2);
+        addLeftInput.value = suggestedAdd.toFixed(2);
+      }
+    }
+  });
+});
+
 function initializeSearchableFields() {
   const fields = [
     '#gender',
@@ -2716,6 +2832,62 @@ function formatPlusSign(value) {
   const num = parseFloat(value);
   return num > 0 ? `+${num}` : String(num);
 }
+
+// Add this function to the existing JavaScript
+function updateAddPowerTooltips() {
+  const age = parseInt(document.getElementById('age').value);
+  if (!age) return;
+
+  let suggestedAdd = '';
+  let explanation = '';
+
+  if (age < 40) {
+    suggestedAdd = 'No Add power needed';
+    explanation = 'Patient is under 40 years old';
+  } else if (age >= 60) {
+    suggestedAdd = '+3.00D';
+    explanation = 'Maximum Add power for age 60 and above';
+  } else {
+    // Define the ranges and corresponding values
+    const addPowerRanges = [
+      { min: 40, max: 41, value: '+1.00D' },
+      { min: 42, max: 44, value: '+1.25D' },
+      { min: 45, max: 46, value: '+1.50D' },
+      { min: 47, max: 49, value: '+1.75D' },
+      { min: 50, max: 51, value: '+2.00D' },
+      { min: 52, max: 54, value: '+2.25D' },
+      { min: 55, max: 56, value: '+2.50D' },
+      { min: 57, max: 59, value: '+2.75D' }
+    ];
+
+    const range = addPowerRanges.find(r => age >= r.min && age <= r.max);
+    if (range) {
+      suggestedAdd = range.value;
+      explanation = `Suggested Add power for age ${age}`;
+    }
+  }
+
+  const tooltipContent = `
+    <strong>${explanation}</strong><br>
+    Suggested Add: ${suggestedAdd}
+  `;
+
+  // Update both tooltips
+  document.getElementById('addRightTooltip').innerHTML = tooltipContent;
+  document.getElementById('addLeftTooltip').innerHTML = tooltipContent;
+}
+
+// Add this to the existing DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+  // ... existing code ...
+
+  // Add event listener for age input
+  const ageInput = document.getElementById('age');
+  ageInput.addEventListener('input', updateAddPowerTooltips);
+  
+  // Initial update of tooltips
+  updateAddPowerTooltips();
+});
 </script>
 </body>
 </html>
